@@ -5,7 +5,7 @@ import UserRegistration from "./pages/UserRegistration";
 
 function App() {
   return (
-    <Login/>
+    <CookCandidateRegistration/>
   );
 }
 
