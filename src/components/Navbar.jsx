@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../images/logo.png";
+import Logo from "../components/Logo";
 import { BsFillPersonFill } from "react-icons/bs";
 
 const Navbar = () => {
@@ -7,9 +7,7 @@ const Navbar = () => {
     <nav className="bg-green-800 h-[120px] flex justify-between items-center">
       <a href="#">
         <div className="flex items-center h-full">
-          <div className="h-full w-[100px] ms-5 flex items-center">
-            <img src={logo} alt="logo" className="w-full rounded-full" />
-          </div>
+          <Logo/>
           <div className="ms-5 flex flex-col items-center font-serif">
             <div className="text-slate-300 text-3xl font-bold">
               Cuochi a domicilio
