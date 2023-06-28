@@ -4,11 +4,11 @@ import { BsFillPersonFill } from "react-icons/bs";
 
 const Navbar = () => {
   return (
-    <nav className="bg-green-800 h-[120px] flex justify-between items-center">
+    <nav className="bg-green-800 h-[120px] flex justify-between items-center font-[DM_Sans]">
       <a href="#">
         <div className="flex items-center h-full">
           <Logo/>
-          <div className="ms-5 flex flex-col items-center font-serif">
+          <div className="ms-5 flex flex-col md:items-center">
             <div className="text-slate-300 text-3xl font-bold">
               Cuochi a domicilio
             </div>

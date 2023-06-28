@@ -121,18 +121,18 @@ const CookCandidateRegistration = () => {
   };
 
   return (
-    <div className="font-mono bg-green-800 w-screen h-screen flex items-center">
+    <div className="font-['DM_Sans'] bg-green-800 w-screen h-screen flex items-center">
       <Toaster position="top-center" reverseOrder={false} />
       {isLoading && <Loader/>}
       <div className="container mx-auto">
         <div className="flex justify-center px-6 my-12">
-          <div className="w-full xl:w-3/4 lg:w-11/12 flex">
+          <div className="w-full flex">
             <img
               src="https://www.robingoodlad.com/wp-content/uploads/2023/01/Food-photographer-Robin-Goodlad-1.jpg"
               alt=""
-              className="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
+              className="bg-gray-400 hidden xl:block xl:w-[600px] xl:h-auto bg-cover rounded-l-lg"
             />
-            <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
+            <div className="w-[600px] h-auto bg-white p-5 rounded-lg lg:rounded-l-none">
               <h3 className="pt-4 text-2xl text-center">
                 Invia la tua candidatura
               </h3>
@@ -141,8 +141,8 @@ const CookCandidateRegistration = () => {
                 onSubmit={handleSubmit}
                 encType="multipart/form-data"
               >
-                <div className="mb-4 lg:flex lg:justify-between">
-                  <div className="mb-4 lg:mr-2 lg:mb-0">
+                <div className="mb-4">
+                  <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700">
                       Nome
                     </label>
@@ -155,7 +155,7 @@ const CookCandidateRegistration = () => {
                       value={formData.firstName}
                     />
                   </div>
-                  <div className="lg:ml-2">
+                  <div>
                     <label className="block mb-2 text-sm font-bold text-gray-700">
                       Cognome
                     </label>
@@ -169,8 +169,8 @@ const CookCandidateRegistration = () => {
                     />
                   </div>
                 </div>
-                <div className="mb-4 lg:flex lg:justify-between">
-                  <div className="mb-4 lg:mr-2 lg:mb-0">
+                <div className="mb-4">
+                  <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700">
                       Email
                     </label>
@@ -183,7 +183,7 @@ const CookCandidateRegistration = () => {
                       value={formData.email}
                     />
                   </div>
-                  <div className="lg:ml-2">
+                  <div>
                     <label className="block mb-2 text-sm font-bold text-gray-700">
                       Telefono
                     </label>
@@ -197,8 +197,8 @@ const CookCandidateRegistration = () => {
                     />
                   </div>
                 </div>
-                <div className="mb-4 lg:flex lg:justify-between">
-                  <div className="mb-4 lg:mr-2 lg:mb-0">
+                <div className="mb-4">
+                  <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700">
                       Curriculum
                     </label>
