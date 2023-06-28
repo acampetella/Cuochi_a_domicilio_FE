@@ -7,7 +7,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="w-full h-[200px]">
+    <footer className="w-full h-[200px] font-[DM_Sans]">
       <div className=" bg-zinc-800 w-full h-[170px] text-slate-300 text-lg font-semibold flex justify-center items-center">
         <div>
           <ul>

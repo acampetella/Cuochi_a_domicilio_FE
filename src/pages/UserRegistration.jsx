@@ -3,7 +3,7 @@ import Logo from "../components/Logo";
 
 const UserRegistration = () => {
   return (
-    <div className="font-mono bg-green-800 w-screen h-screen flex items-center">
+    <div className="font-[DM_Sans] bg-green-800 w-screen h-screen flex items-center">
       <div className="container mx-auto">
         <div className="flex justify-center px-6 my-12">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
