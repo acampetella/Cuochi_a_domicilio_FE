@@ -1,13 +1,23 @@
 import React from 'react';
 import Logo from '../components/Logo';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getFormDataValidation } from "../utilities/validations/formDataValidation";
 import { Toaster } from "react-hot-toast";
 import { Toast } from "../utilities/notifications/toast";
 import Loader from "../components/loaders/Loader";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import getDecodeSession from "../utilities/token/decodeSession";
 
 const Login = () => {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const session = localStorage.getItem("session");
+    if (session) {
+      selectPath();
+    }
+  }, [navigate]);
 
   const formDataInitialValue = {
     email: "",
@@ -38,14 +48,14 @@ const Login = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(formData)
         });
         const response = await data.json();
         if (response.statusCode === 200) {
           setIsLoading(false);
           localStorage.setItem("session", response.token);
-          myToast = new Toast("Login successfully");
           setFormData(formDataInitialValue);
+          selectPath();
         } else {
           const errorMessage = `statusCode: ${response.statusCode}, message: ${response.message}`;
           myToast = new Toast(errorMessage);
@@ -64,6 +74,19 @@ const Login = () => {
 
   const checkFormData = () => {
     return getFormDataValidation(formData, valuesTypes);
+  };
+
+  const selectPath = () => {
+    const user = getDecodeSession();
+    if (user.role === 'admin') {
+      navigate("/adminProfile", { replace: true });
+    } else if (user.role === 'cook') {
+      navigate("/cookProfile", { replace: true });
+    } else if (user.role === 'user') {
+      navigate("/userProfile", { replace: true });
+    } else {
+      navigate("/", { replace: true });
+    }
   };
 
   return (
