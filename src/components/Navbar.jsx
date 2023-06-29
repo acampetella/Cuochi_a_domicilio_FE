@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../components/Logo";
 import { BsFillPersonFill } from "react-icons/bs";
+import {Link} from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -20,10 +21,10 @@ const Navbar = () => {
       </a>
       <div className="me-20 text-slate-300 text-xl font-semibold flex items-center">
         <BsFillPersonFill size={30} />
-        <a href="#" className="ms-1 me-6">
+        <Link to={"/login"} className="ms-1 me-6">
           Login
-        </a>
-        <a href="#">Registrati</a>
+        </Link>
+        <Link to={"/userRegistration"}>Registrati</Link>
       </div>
     </nav>
   );

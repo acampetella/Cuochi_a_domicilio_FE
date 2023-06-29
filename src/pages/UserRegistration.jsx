@@ -5,6 +5,7 @@ import { getFormDataValidation } from "../utilities/validations/formDataValidati
 import { Toaster } from "react-hot-toast";
 import { Toast } from "../utilities/notifications/toast";
 import Loader from "../components/loaders/Loader";
+import {Link} from "react-router-dom";
 
 const UserRegistration = () => {
 
@@ -196,20 +197,28 @@ const UserRegistration = () => {
                   </button>
                 </div>
                 <div className="text-center">
-                  <a
+                  <Link
                     className="inline-block text-blue-500 align-baseline hover:text-blue-800"
-                    href="#"
+                    to={"/cookCandidateRegistration"}
                   >
                     Vuoi candidarti come cuoco? Clicca qui!
-                  </a>
+                  </Link>
                 </div>
                 <div className="text-center">
-                  <a
+                  <Link
                     className="inline-block text-blue-500 align-baseline hover:text-blue-800"
-                    href="#"
+                    to={"/login"}
                   >
                     Hai già un account? Login!
-                  </a>
+                  </Link>
+                </div>
+                <div className="text-center">
+                  <Link
+                    className="inline-block text-blue-500 align-baseline hover:text-blue-800"
+                    to={"/"}
+                  >
+                    Torna alla Home!
+                  </Link>
                 </div>
                 <div className="flex justify-center mt-5">
                   <Logo/>
