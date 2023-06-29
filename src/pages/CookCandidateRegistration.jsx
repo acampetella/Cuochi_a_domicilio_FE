@@ -17,7 +17,7 @@ const CookCandidateRegistration = () => {
   };
 
   const valuesTypes = ["string", "string", "string", "string", "string"];
-  const allowedFileFormats = ["pdf"];
+  const allowedFileFormats = ["pdf", "doc", "docx"];
 
   const [formData, setFormData] = useState(formDataInitialValue);
   const [file, setFile] = useState(null);
@@ -55,7 +55,7 @@ const CookCandidateRegistration = () => {
         try {
           const uploadedFile = await resumeUpload(
             file,
-            `${process.env.REACT_APP_SERVER_BASE_URL}/resumeUpload`
+            `${process.env.REACT_APP_SERVER_BASE_URL}/internal/resumeUpload`
           );
           if (uploadedFile !== undefined) {
             const newFormData = {
@@ -207,6 +207,7 @@ const CookCandidateRegistration = () => {
                       type="file"
                       name="resume"
                       onChange={handleFileChange}
+                      value={formData.resume}
                     />
                   </div>
                 </div>
