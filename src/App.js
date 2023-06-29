@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import UserRegistration from "./pages/UserRegistration";
 import CookProfile from "./pages/CookProfile";
 import UserProfile from "./pages/UserProfile";
+import AdminProfile from "./pages/AdminProfile";
+import ProtectedRoutes from "./middlewares/ProtectedRoute";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -14,9 +16,12 @@ function App() {
         <Route path="/userRegistration" element={<UserRegistration />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/cookProfile" element={<CookProfile />} />
-        <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/cookCandidateRegistration" element={<CookCandidateRegistration />} />
+        <Route element={<ProtectedRoutes/>}>
+          <Route path="/cookProfile" element={<CookProfile />} />
+          <Route path="/userProfile" element={<UserProfile />} />
+          <Route path="/adminProfile" element={<AdminProfile />} />
+        </Route>
       </Routes>
     </>
   );
