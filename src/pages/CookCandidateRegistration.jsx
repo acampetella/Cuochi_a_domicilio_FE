@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { Toast } from "../utilities/notifications/toast";
 import { getFormatFileValidation } from "../utilities/validations/formatFileValidation";
 import Loader from "../components/loaders/Loader";
+import {Link} from "react-router-dom";
 
 const CookCandidateRegistration = () => {
   const formDataInitialValue = {
@@ -220,20 +221,20 @@ const CookCandidateRegistration = () => {
                   </button>
                 </div>
                 <div className="text-center">
-                  <a
+                  <Link
                     className="inline-block text-blue-500 align-baseline hover:text-blue-800"
-                    href="#"
+                    to={"/"}
                   >
                     Torna alla Home!
-                  </a>
+                  </Link>
                 </div>
                 <div className="text-center">
-                  <a
+                  <Link
                     className="inline-block text-blue-500 align-baseline hover:text-blue-800"
-                    href="#"
+                    to={"/login"}
                   >
                     Hai già un account? Login!
-                  </a>
+                  </Link>
                 </div>
                 <div className="flex justify-center mt-5">
                   <Logo />
