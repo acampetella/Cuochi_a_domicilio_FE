@@ -26,7 +26,7 @@ const CookCandidateRegistration = () => {
   const handleChange = (event) => {
     setFormData((prev) => ({
       ...prev,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     }));
   };
 
