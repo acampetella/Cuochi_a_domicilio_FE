@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import CoverCard from '../components/CoverCard';
 
 const CookProfile = () => {
   return (
-    <div>CookProfile</div>
+    <div className='m-auto'>
+      <CoverCard/>
+    </div>
   )
 }
 

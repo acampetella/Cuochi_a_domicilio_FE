@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import CoverCard from '../components/CoverCard';
 
 const UserProfile = () => {
   return (
-    <div>UserProfile</div>
+    <div className='w-screen h-screen flex justify-center pt-10'>
+      <CoverCard/>
+    </div>
   )
 }
 
