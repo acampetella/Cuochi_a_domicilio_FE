@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { setSelectedFile } from '../reducers/buttonSelectedFileReducer';
+import { useDispatch} from 'react-redux';
+import { setSelectedFileURL} from '../reducers/buttonSelectedFileReducer';
 
 const ButtonFileLoader = ({icon, formats}) => {
 
@@ -12,14 +12,15 @@ const ButtonFileLoader = ({icon, formats}) => {
         hiddenFileInput.current.click();
       };
 
-      const handleChange = (event) => {
-        const file = event.target.files[0].name;
-        dispatch(setSelectedFile(file));
-      };
+    const handleChange = (event) => {
+      const file = event.target.files[0];
+      const url = URL.createObjectURL(file);
+      dispatch(setSelectedFileURL(url));
+    };
 
-      const getFormats = () => {
-        return formats.join(',');
-      };
+    const getFormats = () => {
+      return formats.join(',');
+    };
 
   return (
     <div>

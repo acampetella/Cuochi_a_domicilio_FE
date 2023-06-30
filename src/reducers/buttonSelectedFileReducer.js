@@ -1,24 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    selectedFile: ""
+    selectedFileURL: ""
 };
 
 const buttonSelectedFileSlice = createSlice({
-    name: 'setSelectedFile',
+    name: 'setSelectedFileURL',
     initialState,
     reducers: {
-        setSelectedFile: {
+        setSelectedFileURL: {
             reducer: (state, action) => {
-                state.selectedFile = action.payload
+                state.selectedFileURL = action.payload
             },
-            prepare: (file) => {
-                return {payload: file}
+            prepare: (url) => {
+                return {payload: url}
             }
         }
     }
 });
 
-export const selectedFile = (state) => state.buttonSelectedFileState.selectedFile;
-export const {setSelectedFile} = buttonSelectedFileSlice.actions;
+export const selectedFileURL = (state) => state.buttonSelectedFileState.selectedFileURL;
+export const {setSelectedFileURL} = buttonSelectedFileSlice.actions;
 export default buttonSelectedFileSlice.reducer;

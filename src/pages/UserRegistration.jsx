@@ -4,7 +4,7 @@ import { useState } from "react";
 import { getFormDataValidation } from "../utilities/validations/formDataValidation";
 import { Toaster } from "react-hot-toast";
 import { Toast } from "../utilities/notifications/toast";
-import Loader from "../components/loaders/Loader";
+import Loader from "../components/Loader";
 import {Link} from "react-router-dom";
 
 const UserRegistration = () => {
