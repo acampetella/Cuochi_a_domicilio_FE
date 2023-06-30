@@ -6,11 +6,11 @@ import CookProfile from "./pages/CookProfile";
 import UserProfile from "./pages/UserProfile";
 import AdminProfile from "./pages/AdminProfile";
 import ProtectedRoutes from "./middlewares/ProtectedRoute";
-import { Routes, Route } from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <>
+    <Router>
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/userRegistration" element={<UserRegistration />} />
@@ -23,7 +23,7 @@ function App() {
           <Route path="/adminProfile" element={<AdminProfile />} />
         </Route>
       </Routes>
-    </>
+    </Router>
   );
 }
 
