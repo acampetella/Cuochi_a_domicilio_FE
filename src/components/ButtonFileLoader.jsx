@@ -14,8 +14,10 @@ const ButtonFileLoader = ({icon, formats}) => {
 
     const handleChange = (event) => {
       const file = event.target.files[0];
-      const url = URL.createObjectURL(file);
-      dispatch(setSelectedFileURL(url));
+      if (file) {
+        const url = URL.createObjectURL(file);
+        dispatch(setSelectedFileURL(url));
+      }
     };
 
     const getFormats = () => {
