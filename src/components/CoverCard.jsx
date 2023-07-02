@@ -1,12 +1,13 @@
 import React from 'react';
-import ButtonFileLoader from './ButtonFileLoader';
+import ButtonCoverLoader from './ButtonCoverLoader';
 import {MdAddAPhoto} from "react-icons/md";
 import { useSelector } from 'react-redux';
-import { selectedFileURL } from '../reducers/buttonSelectedFileReducer';
+import { selectedCoverURL } from '../reducers/buttonSelectedCoverReducer';
+import AvatarCard from './AvatarCard';
 
 const CoverCard = () => {
 
-  const url = useSelector(selectedFileURL);
+  const url = useSelector(selectedCoverURL);
 
   return (
     <div 
@@ -18,7 +19,8 @@ const CoverCard = () => {
             alt="Cover Image" 
             className='w-full h-full absolute top-0 left-0 object-cover'
           />}
-        <ButtonFileLoader icon={<MdAddAPhoto size={30}/>} formats={["image/png", "image/jpeg"]}/>
+        <ButtonCoverLoader icon={<MdAddAPhoto size={30}/>} formats={["image/png", "image/jpeg"]}/>
+        <AvatarCard/>
     </div>
   )
 }
