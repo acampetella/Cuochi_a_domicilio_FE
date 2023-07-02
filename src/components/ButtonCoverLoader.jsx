@@ -1,9 +1,9 @@
 import React from 'react';
 import { useRef } from 'react';
 import { useDispatch} from 'react-redux';
-import { setSelectedFileURL} from '../reducers/buttonSelectedFileReducer';
+import { setSelectedCoverURL} from '../reducers/buttonSelectedCoverReducer';
 
-const ButtonFileLoader = ({icon, formats}) => {
+const ButtonCoverLoader = ({icon, formats}) => {
 
     const dispatch = useDispatch();
     const hiddenFileInput = useRef(null);
@@ -16,7 +16,7 @@ const ButtonFileLoader = ({icon, formats}) => {
       const file = event.target.files[0];
       if (file) {
         const url = URL.createObjectURL(file);
-        dispatch(setSelectedFileURL(url));
+        dispatch(setSelectedCoverURL(url));
       }
     };
 
@@ -25,8 +25,8 @@ const ButtonFileLoader = ({icon, formats}) => {
     };
 
   return (
-    <div>
-        <button className='absolute bottom-1 right-1' onClick={handleClick}>
+    <div className='absolute bottom-0 right-1'>
+        <button onClick={handleClick}>
             {icon}
         </button>
         <input 
@@ -40,4 +40,4 @@ const ButtonFileLoader = ({icon, formats}) => {
   )
 }
 
-export default ButtonFileLoader
+export default ButtonCoverLoader
