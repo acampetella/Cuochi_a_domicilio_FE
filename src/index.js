@@ -4,12 +4,12 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import buttonSelectedCoverReducer from './reducers/buttonSelectedCoverReducer';
-import buttonSelectedAvatarReducer from './reducers/buttonSelectedAvatarReducer'
+import userReducer from './reducers/userReducer';
+import initialUserReducer from './reducers/initialUserReducer';
 
 const reducer = combineReducers({
-  buttonSelectedCoverState: buttonSelectedCoverReducer,
-  buttonSelectedAvatarState: buttonSelectedAvatarReducer
+  userState: userReducer,
+  initialUserState: initialUserReducer
 });
 
 const store = configureStore({

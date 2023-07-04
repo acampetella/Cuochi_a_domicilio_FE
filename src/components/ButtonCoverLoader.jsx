@@ -1,12 +1,15 @@
 import React from 'react';
 import { useRef } from 'react';
-import { useDispatch} from 'react-redux';
-import { setSelectedCoverURL} from '../reducers/buttonSelectedCoverReducer';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, user, initialUser, setUserChange } from '../reducers/userReducer';
+import { checkUserChange } from '../utilities/validations/userChangeValidation';
 
 const ButtonCoverLoader = ({icon, formats}) => {
 
     const dispatch = useDispatch();
     const hiddenFileInput = useRef(null);
+    const actualUser = useSelector(user);
+    const myInitialUser = useSelector(initialUser);
 
     const handleClick = () => {
         hiddenFileInput.current.click();
@@ -16,7 +19,9 @@ const ButtonCoverLoader = ({icon, formats}) => {
       const file = event.target.files[0];
       if (file) {
         const url = URL.createObjectURL(file);
-        dispatch(setSelectedCoverURL(url));
+        const newUser = {...actualUser, cover: url};
+        dispatch(setUser(newUser));
+        dispatch(setUserChange(true));
       }
     };
 
