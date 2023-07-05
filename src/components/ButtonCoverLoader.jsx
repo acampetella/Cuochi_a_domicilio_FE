@@ -1,15 +1,13 @@
 import React from 'react';
 import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, user, initialUser, setUserChange } from '../reducers/userReducer';
-import { checkUserChange } from '../utilities/validations/userChangeValidation';
+import { setUser, user, setUserChange } from '../reducers/userReducer';
 
 const ButtonCoverLoader = ({icon, formats}) => {
 
     const dispatch = useDispatch();
     const hiddenFileInput = useRef(null);
     const actualUser = useSelector(user);
-    const myInitialUser = useSelector(initialUser);
 
     const handleClick = () => {
         hiddenFileInput.current.click();

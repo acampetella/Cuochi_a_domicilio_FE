@@ -12,12 +12,12 @@ const CoverCard = () => {
 
   return (
     <div 
-      className='bg-slate-200 border-8 border-slate-300 shadow-lg rounded-md w-3/5 xl:h-3/5 lg:h-2/5 h-1/5 relative'
+      className='bg-slate-200 border-8 border-slate-300 shadow-lg rounded-md md:w-2/4 w-3/5 xl:h-3/5 lg:h-2/5 sm:h-1/5 h-1/6 relative'
     >
         { actualUser && actualUser.cover &&
           <img 
             src={actualUser.cover} 
-            alt="Cover Image" 
+            alt="Cover" 
             className='w-full h-full absolute top-0 left-0 object-cover'
           />}
         <ButtonCoverLoader icon={<MdAddAPhoto size={30}/>} formats={["image/png", "image/jpeg"]}/>

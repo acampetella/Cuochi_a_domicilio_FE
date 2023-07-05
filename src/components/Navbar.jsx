@@ -3,10 +3,10 @@ import Logo from "../components/Logo";
 import { BsFillPersonFill } from "react-icons/bs";
 import {Link} from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({enableManu}) => {
   return (
     <nav className="bg-green-800 h-[120px] flex justify-between items-center font-[DM_Sans]">
-      <a href="#">
+      <Link to={'/'}>
         <div className="flex items-center h-full">
           <Logo/>
           <div className="ms-5 flex flex-col md:items-center">
@@ -18,14 +18,14 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-      </a>
-      <div className="me-20 text-slate-300 text-xl font-semibold flex items-center">
+      </Link>
+      {enableManu && <div className="me-20 text-slate-300 text-xl font-semibold flex items-center">
         <BsFillPersonFill size={30} />
         <Link to={"/login"} className="ms-1 me-6">
           Login
         </Link>
         <Link to={"/userRegistration"}>Registrati</Link>
-      </div>
+      </div>}
     </nav>
   );
 };
