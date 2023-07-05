@@ -7,6 +7,7 @@ import UserProfile from "./pages/UserProfile";
 import AdminProfile from "./pages/AdminProfile";
 import ProtectedRoutes from "./middlewares/ProtectedRoute";
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import UserInfoChange from "./pages/UserInfoChange";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/cookProfile" element={<CookProfile />} />
           <Route path="/userProfile" element={<UserProfile />} />
           <Route path="/adminProfile" element={<AdminProfile />} />
+          <Route path="/userInfoChange" element={<UserInfoChange />} />
         </Route>
       </Routes>
     </Router>

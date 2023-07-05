@@ -16,7 +16,7 @@ const ProtectedRoutes = () => {
 
     useEffect(()=>{
         if (!isAuthorized){
-            navigate("/", {replace:true})
+            navigate("/", {replace:true});
         }
     },[navigate])
     return <Outlet />

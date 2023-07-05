@@ -1,17 +1,14 @@
 import React from 'react';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import "../styles/avatarCardStyle.css";
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, user, setUserChange, initialUser} from '../reducers/userReducer';
-import { checkUserChange } from '../utilities/validations/userChangeValidation';
+import { setUser, user, setUserChange } from '../reducers/userReducer';
 
 const AvatarCard = () => {
 
     const dispatch = useDispatch();
     const hiddenFileInput = useRef(null);
     const actualUser = useSelector(user);
-    const myInitialUser = useSelector(initialUser);
-    const [check, setCheck] = useState(false);
 
     
     const handleClick = () => {
@@ -36,7 +33,7 @@ const AvatarCard = () => {
         { actualUser && actualUser.avatar &&
           <img 
             src={actualUser.avatar} 
-            alt="Cover Image" 
+            alt="Avatar" 
             className='w-full h-full object-cover rounded-full'
           />}
           <input 
@@ -46,7 +43,7 @@ const AvatarCard = () => {
             accept="image/png, image/jpeg"
             className='hidden' 
             />
-            <span className="tooltiptext hidden w-[50px] md:w-[100px] lg:w-[150px] xl:w-[200px] py-1 md:py-2 xl:py-3 bg-purple-200 text-black text-center rounded-md absolute z-10 bottom-[-20px] left-8 md:bottom-[-40px] md:left-10 xl:bottom-[-50px] xl:left-20">Carica nuova immagine</span>
+            <span className="tooltiptext hidden w-[50px] md:w-[100px] lg:w-[150px] xl:w-[200px] py-1 md:py-2 xl:py-3 bg-slate-50 text-black text-center rounded-md absolute z-10 bottom-[-20px] left-8 md:bottom-[-40px] md:left-10 xl:bottom-[-50px] xl:left-20">Carica nuova immagine</span>
     </button>
   )
 }
