@@ -50,7 +50,8 @@ const UserInfoChange = () => {
                 method: "PATCH",
                 body: JSON.stringify(formData),
                 headers: {
-                    "Auth": token
+                    "Auth": token,
+                    "Content-Type": "application/json"
                 }
             });
             const response = await data.json();
@@ -65,7 +66,8 @@ const UserInfoChange = () => {
                 method: "POST",
                 body: JSON.stringify(newFormData),
                 headers: {
-                  "Auth": token
+                  "Auth": token,
+                  "Content-Type": "application/json"
                   }
                 });
                 const response2 = await data2.json();
@@ -104,7 +106,7 @@ const UserInfoChange = () => {
         <div className="flex justify-center px-6 my-12">
           <div className="w-full flex">
             <img
-              src="https://www.robingoodlad.com/wp-content/uploads/2023/01/Food-photographer-Robin-Goodlad-1.jpg"
+              src="https://s1.1zoom.me/b5050/744/Cocktail_Strawberry_Black_background_Design_515376_600x800.jpg"
               alt=""
               className="bg-gray-400 hidden xl:block xl:w-[600px] xl:h-auto bg-cover rounded-l-lg"
             />
