@@ -1,61 +1,92 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { user } from '../reducers/userReducer';
-import { nanoid } from 'nanoid';
-import {Link} from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
+import { user, setUser } from "../reducers/userReducer";
+import { nanoid } from "nanoid";
+import { Link } from "react-router-dom";
+import { LuEdit } from "react-icons/lu";
+import { CgAddR } from "react-icons/cg";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import AddPhoneModal from "../components/AddPhoneModal";
 
 const UserInfo = () => {
+  const actualUser = useSelector(user);
+  const dispatch = useDispatch();
 
-    const actualUser = useSelector(user);
-
-    const getReverseDate = () => {
-        if (actualUser.birthDate) {
-            const arr = actualUser.birthDate.split('-').reverse();
-            return arr.join('-');
-        }
-        return actualUser.birthDate;
+  const getReverseDate = () => {
+    if (actualUser.birthDate) {
+      const arr = actualUser.birthDate.split("-").reverse();
+      return arr.join("-");
     }
+    return actualUser.birthDate;
+  };
 
-  return (actualUser &&
-    <div 
-        className='bg-slate-100 rounded-lg md:w-2/4 w-3/5 relative xl:mt-12 lg:mt-10 md:mt-8 mt-4'    
-    >
-        <div 
-            className='xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-4xl md:text-2xl text-xl font-black'
-        >
-            {`${actualUser.firstName} ${actualUser.lastName}`}
-        </div>
-        <div 
-            className='xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium'
-        >
-            {`Data di nascita: ${getReverseDate()}`}
-        </div>
-        <div 
-            className='xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium'
-        >
-            {`Email: ${actualUser.email}`}
-        </div>
-        <div 
-            className='xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium'
-        >
+  const deletePhoheHandler = (id) => {
+    const arr = [...actualUser.phones];
+    arr.splice(id, 1);
+    const newUser = { ...actualUser, phones: arr };
+    dispatch(setUser(newUser));
+  };
+
+  const addPhoneHandler = () => {
+    
+  };
+
+  return (
+    actualUser && (
+      <div className="bg-slate-100 rounded-lg md:w-2/4 w-3/5 relative xl:mt-12 lg:mt-10 md:mt-8 mt-4">
+        <section className="flex items-center">
+          <div>
+            <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-4xl md:text-2xl text-xl font-black">
+              {`${actualUser.firstName} ${actualUser.lastName}`}
+            </div>
+            <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium">
+              {`Data di nascita: ${getReverseDate()}`}
+            </div>
+            <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium">
+              {`Email: ${actualUser.email}`}
+            </div>
+          </div>
+          <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium">
+            <Link to={"/userInfoChange"}>
+              <button>
+                <LuEdit className="md:text-3xl text-xl mr-1" />
+              </button>
+            </Link>
+          </div>
+        </section>
+        <hr />
+        <section className="flex">
+          <AddPhoneModal/>
+          <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium">
             {"Contatti telefonici:"}
             <ul>
-                {actualUser.phones && actualUser.phones.map((phone) => <li key={nanoid()}>{`${phone}`}</li>)}
+              {actualUser &&
+                actualUser.phones &&
+                actualUser.phones.map((phone, index) => (
+                  <li key={nanoid()}>
+                    {`${phone}`}
+                    <button
+                      className="ml-4"
+                      onClick={() => deletePhoheHandler(index)}
+                    >
+                      <RiDeleteBin5Line className="md:text-3xl text-xl" />
+                    </button>
+                  </li>
+                ))}
             </ul>
-        </div>
-        <div 
-            className='xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium'
-        >
-            <Link to={"/userInfoChange"}>
-                <button
-                    className="xl:w-[220px] lg:w-[200px] md:w-[180px] w-[160px] px-4 py-2 my-2 lg:font-bold font-normal text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                >
-                    Modifica info
-                </button>
+          </div>
+          <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium">
+            <Link to={""}>
+              <button onClick={addPhoneHandler}>
+                <CgAddR className="md:text-3xl text-xl" />
+              </button>
             </Link>
-        </div>
-    </div>
-  )
-}
+          </div>
+        </section>
+      </div>
+    )
+  );
+};
 
-export default UserInfo
+export default UserInfo;
