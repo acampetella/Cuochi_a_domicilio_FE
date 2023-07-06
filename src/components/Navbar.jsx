@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 const Navbar = ({enableManu}) => {
   return (
-    <nav className="bg-green-800 h-[120px] flex justify-between items-center font-[DM_Sans]">
+    <nav className="bg-green-800 h-[120px] flex justify-between items-center font-[DM_Sans] sticky top-0 z-10">
       <Link to={'/'}>
         <div className="flex items-center h-full">
           <Logo/>
