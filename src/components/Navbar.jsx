@@ -11,6 +11,7 @@ const Navbar = () => {
 
   const [enableManu, setEnableMenu] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [profileURL, setProfileURL] = useState(null);
   const navigate = useNavigate();
 
   const logout = () => {
@@ -25,6 +26,13 @@ const Navbar = () => {
       setEnableMenu(false);
       const session = getDecodeSession();
       setUserId(`${session.firstName.toUpperCase().charAt(0)}${session.lastName.toUpperCase().charAt(0)}`);
+      if (session.role === 'user') {
+        setProfileURL("/userProfile");
+      } else if (session.role === 'cook') {
+        setProfileURL("/cookProfile");
+      } else {
+        setProfileURL("/adminProfile");
+      }
     }
   }, []);
 
@@ -53,9 +61,11 @@ const Navbar = () => {
       </div>}
       {!enableManu && 
       <div className="me-20 text-slate-300 text-xl font-semibold flex items-center">
-        <div className="w-[50px] h-[50px] rounded-full bg-lime-700 border-2 border-white flex justify-center items-center mr-1">
-          {userId}
-        </div>
+        <Link to={profileURL}>
+          <div className="w-[50px] h-[50px] rounded-full bg-lime-700 border-2 border-white flex justify-center items-center mr-1">
+            {userId}
+          </div>
+        </Link>
         <a href="#" className="ml-3 me-6">
           <button onClick={logout}>Logout</button>
         </a>
