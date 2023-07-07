@@ -78,7 +78,7 @@ const UserProfile = () => {
           headers: {
             Auth: token,
             "Content-Type": "application/json",
-          },
+          }
         }
       );
       const response = await data.json();
@@ -91,7 +91,7 @@ const UserProfile = () => {
             headers: {
               Auth: token,
               "Content-Type": "application/json",
-            },
+            }
           }
         );
         const response2 = await data2.json();
@@ -140,7 +140,7 @@ const UserProfile = () => {
     <div>
       <Toaster position="top-center" reverseOrder={false} />
       {isLoading && <Loader />}
-      <Navbar enableManu={false} />
+      <Navbar/>
       <div className="w-screen h-screen flex flex-col items-center pt-10 bg-slate-50">
         <CoverCard />
         <UserInfo />
