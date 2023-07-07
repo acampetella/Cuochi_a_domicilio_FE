@@ -7,6 +7,7 @@ import { Toast } from "../utilities/notifications/toast";
 import { getFormatFileValidation } from "../utilities/validations/formatFileValidation";
 import Loader from "../components/Loader";
 import {Link} from "react-router-dom";
+import { fileUpload } from "../utilities/fileManagers/fileUpload";
 
 const CookCandidateRegistration = () => {
   const formDataInitialValue = {
@@ -54,9 +55,10 @@ const CookCandidateRegistration = () => {
         //qui va fatta la fetch
         setIsLoading(true);
         try {
-          const uploadedFile = await resumeUpload(
+          const uploadedFile = await fileUpload(
             file,
-            `${process.env.REACT_APP_SERVER_BASE_URL}/internal/resumeUpload`
+            `${process.env.REACT_APP_SERVER_BASE_URL}/internal/resumeUpload`,
+            "resume"
           );
           if (uploadedFile !== undefined) {
             const newFormData = {
@@ -100,23 +102,6 @@ const CookCandidateRegistration = () => {
       }
     } else {
       myToast = new Toast(result);
-      myToast.notifyError();
-    }
-  };
-
-  const resumeUpload = async (file, endpoint) => {
-    const fileData = new FormData();
-    fileData.append("resume", file);
-
-    try {
-      const data = await fetch(endpoint, {
-        method: "POST",
-        body: fileData,
-      });
-      const response = await data.json();
-      return response;
-    } catch (error) {
-      const myToast = new Toast(error.toString());
       myToast.notifyError();
     }
   };

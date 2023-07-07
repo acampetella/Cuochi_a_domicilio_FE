@@ -1,7 +1,8 @@
 import React from 'react';
 import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, user, setUserChange } from '../reducers/userReducer';
+import { setUser, user } from '../reducers/userReducer';
+import { setCoverImage } from '../reducers/coverUploadReducer';
 
 const ButtonCoverLoader = ({icon, formats}) => {
 
@@ -16,10 +17,10 @@ const ButtonCoverLoader = ({icon, formats}) => {
     const handleChange = (event) => {
       const file = event.target.files[0];
       if (file) {
+        dispatch(setCoverImage(file));
         const url = URL.createObjectURL(file);
         const newUser = {...actualUser, cover: url};
         dispatch(setUser(newUser));
-        dispatch(setUserChange(true));
       }
     };
 

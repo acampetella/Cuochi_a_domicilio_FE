@@ -2,7 +2,8 @@ import React from 'react';
 import { useRef } from 'react';
 import "../styles/avatarCardStyle.css";
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, user, setUserChange } from '../reducers/userReducer';
+import { setUser, user } from '../reducers/userReducer';
+import { setAvatarImage } from '../reducers/avatarUploadReducer';
 
 const AvatarCard = () => {
 
@@ -18,10 +19,10 @@ const AvatarCard = () => {
     const handleChange = (event) => {
       const file = event.target.files[0];
       if (file) {
+        dispatch(setAvatarImage(file));
         const url = URL.createObjectURL(file);
         const newUser = {...actualUser, avatar: url};
         dispatch(setUser(newUser));
-        dispatch(setUserChange(true));
       }
     };
 
