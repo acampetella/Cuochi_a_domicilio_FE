@@ -1,24 +1,44 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setPhoneModalShow } from "../reducers/addPhoneModalReducer";
+import { user, setUser } from "../reducers/userReducer";
+import { RiCloseCircleFill } from "react-icons/ri";
 
 const AddPhoneModal = () => {
 
     const [value, setValue] = useState("");
-    console.log(value);
+    const dispatch = useDispatch();
+    const actualUser = useSelector(user);
 
     const onChangeHandler = (event) => {
         setValue(event.target.value);
     };
 
-    const submitFunction = () => {
+    const submitFunction = (event) => {
+      event.preventDefault();
+      const actualPhones = actualUser.phones;
+      const newPhones = [...actualPhones];
+      newPhones.push(value);
+      const newUser = {...actualUser, phones: newPhones};
+      dispatch(setUser(newUser));
+      setValue("");
+      dispatch(setPhoneModalShow(false));
+    };
 
+    const closeHandler = () => {
+      dispatch(setPhoneModalShow(false));
     };
 
   return (
+    
     <div className="w-full max-w-md mx-auto p-6 fixed z-10 md:top-1/2 lg:left-1/2 md:left-1/3 top-3 left-0">
       <div className="mt-7 bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
         <div className="p-4 sm:p-7">
-          <div className="text-center">
+          <div className="text-center relative">
+            <button className="absolute top-0 right-0" onClick={closeHandler}>
+              <RiCloseCircleFill size={25}/>  
+            </button>
             <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
               Inserisci contatto
             </h1>

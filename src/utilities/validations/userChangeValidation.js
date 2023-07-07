@@ -1,24 +1,27 @@
-export const checkUserChange = (actualUser, initialUser) => {
-    if (actualUser.firstName !== initialUser.firstName) {
+import { checkUserPhones } from "./userPhonesValidation";
+
+export const checkUserChange = (currentUser, initialUser) => {
+    if (currentUser.firstName !== initialUser.firstName) {
       return true;
     }
-    if (actualUser.lastName !== initialUser.lastName) {
+    if (currentUser.lastName !== initialUser.lastName) {
         return true;
     }
-    if (actualUser.birthDate !== initialUser.birthDate) {
+    if (currentUser.birthDate !== initialUser.birthDate) {
         return true;
     }
-    if (actualUser.email !== initialUser.email) {
+    if (currentUser.email !== initialUser.email) {
         return true;
     }
-    if (actualUser.avatar !== initialUser.avatar) {
+    if (currentUser.avatar !== initialUser.avatar) {
         return true;
     }
-    if (actualUser.cover !== initialUser.cover) {
+    if (currentUser.cover !== initialUser.cover) {
         return true;
     }
-    if (actualUser.phones !== initialUser.phones) {
+    if (checkUserPhones(currentUser.phones, initialUser.phones)) {
         return true;
     }
+
     return false;
   }

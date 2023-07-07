@@ -1,17 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { user, setUser } from "../reducers/userReducer";
+import { phoneModalShow, setPhoneModalShow } from "../reducers/addPhoneModalReducer";
 import { nanoid } from "nanoid";
 import { Link } from "react-router-dom";
 import { LuEdit } from "react-icons/lu";
 import { CgAddR } from "react-icons/cg";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AddPhoneModal from "../components/AddPhoneModal";
 
 const UserInfo = () => {
   const actualUser = useSelector(user);
   const dispatch = useDispatch();
+  const showModal = useSelector(phoneModalShow);
 
   const getReverseDate = () => {
     if (actualUser.birthDate) {
@@ -21,7 +22,7 @@ const UserInfo = () => {
     return actualUser.birthDate;
   };
 
-  const deletePhoheHandler = (id) => {
+  const deletePhoneHandler = (id) => {
     const arr = [...actualUser.phones];
     arr.splice(id, 1);
     const newUser = { ...actualUser, phones: arr };
@@ -29,7 +30,7 @@ const UserInfo = () => {
   };
 
   const addPhoneHandler = () => {
-    
+    dispatch(setPhoneModalShow(true));
   };
 
   return (
@@ -57,7 +58,7 @@ const UserInfo = () => {
         </section>
         <hr />
         <section className="flex">
-          <AddPhoneModal/>
+          {showModal && <AddPhoneModal/>}
           <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium">
             {"Contatti telefonici:"}
             <ul>
@@ -68,7 +69,7 @@ const UserInfo = () => {
                     {`${phone}`}
                     <button
                       className="ml-4"
-                      onClick={() => deletePhoheHandler(index)}
+                      onClick={() => deletePhoneHandler(index)}
                     >
                       <RiDeleteBin5Line className="md:text-3xl text-xl" />
                     </button>

@@ -6,9 +6,9 @@ import { Toaster } from "react-hot-toast";
 import { Toast } from "../utilities/notifications/toast";
 import Loader from "../components/Loader";
 import {Link} from "react-router-dom";
-import getDecodeSession from "../utilities/token/decodeSession";
-import getAccessKey from "../utilities/token/accessKey";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, user } from '../reducers/userReducer';
 
 const UserInfoChange = () => {
 
@@ -16,10 +16,15 @@ const UserInfoChange = () => {
     const [isLoading, setIsLoading] = useState(false);
     const valuesTypes = ["string", "string", "string"];
     const navigate = useNavigate();
-    const token = getAccessKey();
+    const dispatch = useDispatch();
+    const actualUser = useSelector(user);
 
     useEffect(() => {
-        setFormData(getDecodeSession());
+        setFormData({
+          firstName: actualUser.firstName,
+          lastName: actualUser.lastName,
+          birthDate: actualUser.birthDate
+        });
     }, []);
 
 
@@ -31,12 +36,7 @@ const UserInfoChange = () => {
   };
 
   const checkFormData = () => {
-    const newFormData = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      birthDate: formData.birthDate
-    };
-    return getFormDataValidation(newFormData, valuesTypes);
+    return getFormDataValidation(formData, valuesTypes);
   };
 
   const handleSubmit = async (event) => {
@@ -44,54 +44,16 @@ const UserInfoChange = () => {
     let myToast;
     const result = checkFormData();
     if (result === true) {
-        try {
-            setIsLoading(true);
-            const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/users/${formData.id}`, {
-                method: "PATCH",
-                body: JSON.stringify(formData),
-                headers: {
-                    "Auth": token,
-                    "Content-Type": "application/json"
-                }
-            });
-            const response = await data.json();
-            if (response.statusCode === 200) {
-                const newFormData = {
-                  firstName: formData.firstName,
-                  lastName: formData.lastName,
-                  email: formData.email,
-                  birthDate: formData.birthDate
-                };
-                const data2 = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/getNewToken`, {
-                method: "POST",
-                body: JSON.stringify(newFormData),
-                headers: {
-                  "Auth": token,
-                  "Content-Type": "application/json"
-                  }
-                });
-                const response2 = await data2.json();
-                if (response2.statusCode === 200) {
-                  const newToken = response2.newToken;
-                  localStorage.clear();
-                  localStorage.setItem("session", newToken);
-                  setIsLoading(false);
-                  navigate("/userProfile", {replace:true});
-                } else {
-                  const errorMessage = `statusCode: ${response2.statusCode}, message: ${response2.message}`;
-                  myToast = new Toast(errorMessage);
-                  myToast.notifyError();
-                }
-            } else {
-                const errorMessage = `statusCode: ${response.statusCode}, message: ${response.message}`;
-                myToast = new Toast(errorMessage);
-                myToast.notifyError();
-            }
-            setIsLoading(false);
-        } catch (error) {
-            myToast = new Toast(error.toString());
-            myToast.notifyError();
-        }
+        setIsLoading(true);
+        const newUser = {
+          ...actualUser,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          birthDate: formData.birthDate
+        };
+        dispatch(setUser(newUser));
+        setIsLoading(false);
+        navigate("/userProfile", { replace: true });
     } else {
       myToast = new Toast(result);
       myToast.notifyError();
