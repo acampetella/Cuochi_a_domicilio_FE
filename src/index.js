@@ -8,12 +8,14 @@ import userReducer from './reducers/userReducer';
 import addPhoneModalReducer from './reducers/addPhoneModalReducer';
 import coverUploadReducer from './reducers/coverUploadReducer';
 import avatarUploadReducer from './reducers/avatarUploadReducer';
+import candidateModalReducer from './reducers/candidateModalReducer';
 
 const reducer = combineReducers({
   userState: userReducer,
   addPhoneModalState: addPhoneModalReducer,
   coverUploadState: coverUploadReducer,
-  avatarUploadState: avatarUploadReducer
+  avatarUploadState: avatarUploadReducer,
+  candidateModalState: candidateModalReducer
 });
 
 const store = configureStore({

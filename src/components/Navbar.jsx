@@ -16,6 +16,7 @@ const Navbar = () => {
 
   const logout = () => {
     localStorage.clear();
+    setEnableMenu(true);
     navigate("/", { replace: true });
   };
 

@@ -22,9 +22,9 @@ const UserInfo = () => {
     return actualUser.birthDate;
   };
 
-  const deletePhoneHandler = (id) => {
+  const deletePhoneHandler = (index) => {
     const arr = [...actualUser.phones];
-    arr.splice(id, 1);
+    arr.splice(index, 1);
     const newUser = { ...actualUser, phones: arr };
     dispatch(setUser(newUser));
   };
