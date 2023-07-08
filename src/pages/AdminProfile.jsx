@@ -8,6 +8,11 @@ import Footer from "../components/Footer";
 import { nanoid } from "nanoid";
 import {FcApprove, FcDisapprove} from "react-icons/fc";
 import Loader from "../components/Loader";
+import CandidateModal from "../components/CandidateModal";
+import { candidateModalShow, setCandidateModalShow } from "../reducers/candidateModalReducer";
+import { setCandidateModalTitle, setCandidateConfirmFunction, setCandidateModalText } from "../reducers/candidateModalReducer";
+import { useSelector, useDispatch } from "react-redux";
+import { randomPassword } from "../utilities/password/generatePassword";
 
 const AdminProfile = () => {
   const [candidates, setCandidates] = useState([]);
@@ -15,6 +20,8 @@ const AdminProfile = () => {
   const [enableButton, setEnableButton] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const token = getAccessKey();
+  const dispatch = useDispatch();
+  const showModal = useSelector(candidateModalShow);
 
   const getCandidates = async () => {
     try {
@@ -55,6 +62,45 @@ const AdminProfile = () => {
     setCurrentPage(currentPage + 1);
   };
 
+  const acceptCandidateHandler = (index) => {
+    const psw = randomPassword(8);
+    dispatch(setCandidateModalTitle("Richiesta accettata"));
+    dispatch(setCandidateModalText(getWelcomeMessage(candidates[index].email, psw)));
+    dispatch(setCandidateModalShow(true));
+  };
+
+  const rejectCandidateHandler = (index) => {
+    dispatch(setCandidateModalTitle("Richiesta non accettata"));
+    dispatch(setCandidateModalText(getRejectMessage()));
+    dispatch(setCandidateModalShow(true));
+  };
+
+  const getWelcomeMessage = (username, password) => {
+    const message = 
+    `Gentile candidato,
+    siamo lieti di informarla che la sua richiesta è stata accetata.
+    A tal proposito le comunichiamo le credenziali di accesso al sistema:
+
+    username: ${username}
+    password: ${password}
+
+    In bocca al lupo per questa nuova avventura.
+
+    Lo staff di Cuochi a Domicilio`;
+    return message;
+  };
+
+  const getRejectMessage = () => {
+    const message = 
+    `Gentile candidato,
+    siamo spiacenti di informarla che non possiamo accettare la sua richiesta.
+    Ad ogni modo, la rihgraziamo per aver presentato la sua candidatura.
+
+    Lo staff di Cuochi a Domicilio`;
+    return message;
+  };
+
+
   useEffect(() => {
     getCandidates();
   }, [currentPage]);
@@ -92,7 +138,7 @@ const AdminProfile = () => {
                       </div>
                     </div>
                     {candidates &&
-                      candidates.map((candidate) => {
+                      candidates.map((candidate, index) => {
                         return (
                           <div key={nanoid()}>
                             <div className="flex justify-between py-2 text-md">
@@ -109,8 +155,16 @@ const AdminProfile = () => {
                                 <a href={candidate.resume} className="underline">CV</a>
                               </div>
                               <div className="lg:min-w-[200px]">
-                                <button><FcApprove size={30}/></button>
-                                <button><FcDisapprove size={30}/></button>
+                                <button
+                                  onClick={() => acceptCandidateHandler(index)}
+                                >
+                                  <FcApprove size={30}/>
+                                </button>
+                                <button
+                                  onClick={() => rejectCandidateHandler(index)}
+                                >
+                                  <FcDisapprove size={30}/>
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -128,6 +182,7 @@ const AdminProfile = () => {
               Carica
             </button>}
           </div>
+          {showModal && <CandidateModal/>}
         </div>
       </div>
       <Footer />
