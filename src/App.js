@@ -8,6 +8,8 @@ import AdminProfile from "./pages/AdminProfile";
 import ProtectedRoutes from "./middlewares/ProtectedRoute";
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserInfoChange from "./pages/UserInfoChange";
+import CookInfo from "./components/CookInfo";
+import CookMenus from "./components/CookMenus";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/userProfile" element={<UserProfile />} />
           <Route path="/adminProfile" element={<AdminProfile />} />
           <Route path="/userInfoChange" element={<UserInfoChange />} />
+          <Route path="/cookInfo" element={<CookInfo />} />
+          <Route path="/cookMenus" element={<CookMenus />} />
         </Route>
       </Routes>
     </Router>

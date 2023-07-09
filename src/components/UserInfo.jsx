@@ -10,22 +10,22 @@ import { useDispatch, useSelector } from "react-redux";
 import AddPhoneModal from "../components/AddPhoneModal";
 
 const UserInfo = () => {
-  const actualUser = useSelector(user);
+  const currentUser = useSelector(user);
   const dispatch = useDispatch();
   const showModal = useSelector(phoneModalShow);
 
   const getReverseDate = () => {
-    if (actualUser.birthDate) {
-      const arr = actualUser.birthDate.split("-").reverse();
+    if (currentUser.birthDate) {
+      const arr = currentUser.birthDate.split("-").reverse();
       return arr.join("-");
     }
-    return actualUser.birthDate;
+    return currentUser.birthDate;
   };
 
   const deletePhoneHandler = (index) => {
-    const arr = [...actualUser.phones];
+    const arr = [...currentUser.phones];
     arr.splice(index, 1);
-    const newUser = { ...actualUser, phones: arr };
+    const newUser = { ...currentUser, phones: arr };
     dispatch(setUser(newUser));
   };
 
@@ -34,18 +34,18 @@ const UserInfo = () => {
   };
 
   return (
-    actualUser && (
+    currentUser && (
       <div className="bg-slate-100 rounded-lg md:w-2/4 w-3/5 relative xl:mt-12 lg:mt-10 md:mt-8 mt-4">
         <section className="flex items-center">
           <div>
             <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-4xl md:text-2xl text-xl font-black">
-              {`${actualUser.firstName} ${actualUser.lastName}`}
+              {`${currentUser.firstName} ${currentUser.lastName}`}
             </div>
             <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium">
               {`Data di nascita: ${getReverseDate()}`}
             </div>
             <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium">
-              {`Email: ${actualUser.email}`}
+              {`Email: ${currentUser.email}`}
             </div>
           </div>
           <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium">
@@ -62,9 +62,9 @@ const UserInfo = () => {
           <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium">
             {"Contatti telefonici:"}
             <ul>
-              {actualUser &&
-                actualUser.phones &&
-                actualUser.phones.map((phone, index) => (
+              {currentUser &&
+                currentUser.phones &&
+                currentUser.phones.map((phone, index) => (
                   <li key={nanoid()}>
                     {`${phone}`}
                     <button

@@ -6,18 +6,33 @@ import { isAuth } from "../utilities/token/session";
 import { useState, useEffect } from "react";
 import getDecodeSession from "../utilities/token/decodeSession";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser, setInitialUser, setUserChange } from "../reducers/userReducer";
+import HamburgerMenu from "./HamburgerMenu";
+import "../styles/navbarStyle.css";
 
 const Navbar = () => {
 
   const [enableManu, setEnableMenu] = useState(false);
+  const [enableCookMenu, setEnableCookMenu] = useState(false);
   const [userId, setUserId] = useState(null);
   const [profileURL, setProfileURL] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const hamburgerMenusList = ['Profilo','Info', 'Menu'];
+  const hamburgerLinksList = [profileURL, '/cookInfo', '/cookMenus'];
 
   const logout = () => {
     localStorage.clear();
+    resetUserParameters();
     setEnableMenu(true);
     navigate("/", { replace: true });
+  };
+
+  const resetUserParameters = () => {
+    dispatch(setUser(null));
+    dispatch(setInitialUser(null));
+    dispatch(setUserChange(false));
   };
 
   useEffect(() => {
@@ -31,6 +46,7 @@ const Navbar = () => {
         setProfileURL("/userProfile");
       } else if (session.role === 'cook') {
         setProfileURL("/cookProfile");
+        setEnableCookMenu(true);
       } else {
         setProfileURL("/adminProfile");
       }
@@ -52,6 +68,13 @@ const Navbar = () => {
           </div>
         </div>
       </Link>
+      {enableCookMenu && 
+      <div className="hidden me-20 text-slate-300 text-xl font-semibold sm:flex items-center">
+        <Link to={"/cookInfo"} className="ms-1 me-6">
+          Info
+        </Link>
+        <Link to={"/cookMenus"}>Menu</Link>
+      </div>}
       {enableManu && 
       <div className="me-20 text-slate-300 text-xl font-semibold flex items-center">
         <BsFillPersonFill size={30} />
@@ -62,7 +85,7 @@ const Navbar = () => {
       </div>}
       {!enableManu && 
       <div className="me-20 text-slate-300 text-xl font-semibold flex items-center">
-        <Link to={profileURL}>
+        <Link to={profileURL} className="sm:inline hidden">
           <div className="w-[50px] h-[50px] rounded-full bg-lime-700 border-2 border-white flex justify-center items-center mr-1">
             {userId}
           </div>
@@ -70,6 +93,12 @@ const Navbar = () => {
         <a href="#" className="ml-3 me-6">
           <button onClick={logout}>Logout</button>
         </a>
+        <div className="hamburger-menu">
+          <HamburgerMenu 
+            menusList={hamburgerMenusList} 
+            linksList={hamburgerLinksList}
+          />
+        </div>
       </div>}
     </nav>
   );

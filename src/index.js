@@ -9,13 +9,15 @@ import addPhoneModalReducer from './reducers/addPhoneModalReducer';
 import coverUploadReducer from './reducers/coverUploadReducer';
 import avatarUploadReducer from './reducers/avatarUploadReducer';
 import confirmDialogReducer from './reducers/confirmDialogReducer';
+import cookReducer from './reducers/cookReducer';
 
 const reducer = combineReducers({
   userState: userReducer,
   addPhoneModalState: addPhoneModalReducer,
   coverUploadState: coverUploadReducer,
   avatarUploadState: avatarUploadReducer,
-  confirmDialogState: confirmDialogReducer
+  confirmDialogState: confirmDialogReducer,
+  cookState: cookReducer
 });
 
 const store = configureStore({
