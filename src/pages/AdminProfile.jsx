@@ -8,20 +8,25 @@ import Footer from "../components/Footer";
 import { nanoid } from "nanoid";
 import {FcApprove, FcDisapprove} from "react-icons/fc";
 import Loader from "../components/Loader";
-import CandidateModal from "../components/CandidateModal";
-import { candidateModalShow, setCandidateModalShow } from "../reducers/candidateModalReducer";
-import { setCandidateModalTitle, setCandidateConfirmFunction, setCandidateModalText } from "../reducers/candidateModalReducer";
-import { useSelector, useDispatch } from "react-redux";
 import { randomPassword } from "../utilities/password/generatePassword";
+import ConfirmDialogBox from "../components/ConfirmDialogBox";
+import { confirmDialogShow, confirmDialogButtonPressed } from "../reducers/confirmDialogReducer";
+import { setConfirmDialogShow, setConfirmDialogButtonPressed } from "../reducers/confirmDialogReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const AdminProfile = () => {
   const [candidates, setCandidates] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [enableButton, setEnableButton] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
+  const [approveAction, setApproveAction] = useState(false);
+  const [disapproveAction, setDisapproveAction] = useState(false);
+  const [candidateSelected, setCandidateSelected] = useState(null);
   const token = getAccessKey();
   const dispatch = useDispatch();
-  const showModal = useSelector(candidateModalShow);
+  const showDialog = useSelector(confirmDialogShow);
+  const confirmButtonPressed = useSelector(confirmDialogButtonPressed);
 
   const getCandidates = async () => {
     try {
@@ -32,7 +37,7 @@ const AdminProfile = () => {
           headers: {
             Auth: token,
             "Content-Type": "application/json",
-          },
+          }
         }
       );
       const response = await data.json();
@@ -41,7 +46,7 @@ const AdminProfile = () => {
         candidates.forEach((candidate) => arr.push(candidate));
         response.candidates.forEach((candidate) => arr.push(candidate));
         setCandidates(arr);
-        if (currentPage === response.totalPages) {
+        if (currentPage === response.totalPages || response.count === 0) {
           setEnableButton(false);
         }
         setIsLoading(false);
@@ -63,16 +68,23 @@ const AdminProfile = () => {
   };
 
   const acceptCandidateHandler = (index) => {
-    const psw = randomPassword(8);
-    dispatch(setCandidateModalTitle("Richiesta accettata"));
-    dispatch(setCandidateModalText(getWelcomeMessage(candidates[index].email, psw)));
-    dispatch(setCandidateModalShow(true));
+      setCandidateSelected(candidates[index]);
+      const message = `Stai accettando la richiesta del candidato ${candidates[index].firstName} ${candidates[index].lastName}.
+      Vuoi procedere ?`;
+      setDialogMessage(message);
+      setApproveAction(true);
+      setDisapproveAction(false);
+      dispatch(setConfirmDialogShow(true));
   };
 
   const rejectCandidateHandler = (index) => {
-    dispatch(setCandidateModalTitle("Richiesta non accettata"));
-    dispatch(setCandidateModalText(getRejectMessage()));
-    dispatch(setCandidateModalShow(true));
+    setCandidateSelected(candidates[index]);
+    const message = `Stai rifiutando la richiesta del candidato ${candidates[index].firstName} ${candidates[index].lastName}.
+    Vuoi procedere ?`;
+    setDialogMessage(message);
+    setApproveAction(false);
+    setDisapproveAction(true);
+    dispatch(setConfirmDialogShow(true));
   };
 
   const getWelcomeMessage = (username, password) => {
@@ -94,10 +106,106 @@ const AdminProfile = () => {
     const message = 
     `Gentile candidato,
     siamo spiacenti di informarla che non possiamo accettare la sua richiesta.
-    Ad ogni modo, la rihgraziamo per aver presentato la sua candidatura.
+    Ad ogni modo, la ringraziamo per aver presentato la sua candidatura.
 
     Lo staff di Cuochi a Domicilio`;
     return message;
+  };
+
+  const approveCandidate = async (candidate, password) => {
+    /*
+      1 - creare l'utente cuoco
+      2 - cancellare l'utente dalla tabella dei candidati
+      3 - inviare mail
+    */
+    await createCookUser(candidate, password);
+    await deleteCandidate(candidate);
+    await sendEmail(candidate, "Richiesta approvata", getWelcomeMessage(candidate.email, password));
+  };
+
+  const disapproveCandidate = async (candidate) => {
+    /*
+      1 - cancellare l'utente dalla tabella dei candidati
+      2 - inviare mail
+    */
+    await deleteCandidate(candidate);
+    await sendEmail(candidate, "Richiesta non approvata", getRejectMessage());
+  };
+
+  const createCookUser = async (candidate, psw) => {
+    const cook = {
+      firstName: candidate.firstName,
+      lastName: candidate.lastName,
+      email: candidate.email,
+      phones: [candidate.phone],
+      password: psw
+    }
+    try {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/cooks`, {
+        method: "POST",
+        body: JSON.stringify(cook),
+        headers: {
+          Auth: token,
+          "Content-Type": "application/json",
+        }
+      });
+      const response = await data.json();
+      if (response.statusCode !== 201) {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  const deleteCandidate = async (candidate) => {
+    const id = candidate._id;
+    try {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/cooksCandidates/${id}`, {
+        method: "DELETE",
+        headers: {
+          Auth: token
+        }
+      });
+      const response = await data.json();
+      if (response.statusCode !== 200) {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+
+  };
+
+  const sendEmail = async (candidate, sub, text) => {
+    const content = {
+      destination: candidate.email,
+      subject: sub,
+      message: text
+    };
+    try {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/sendMail`, {
+        method: "POST",
+        body: JSON.stringify(content),
+        headers: {
+          Auth: token,
+          "Content-Type": "application/json"
+        }
+      });
+      const response = await data.json();
+      if (response.statusCode !== 200) {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+    
+  }
+
+  const resetDialogParameters = () => {
+    dispatch(setConfirmDialogButtonPressed(null));
+    dispatch(setConfirmDialogShow(false));
+    setDialogMessage("");
   };
 
 
@@ -105,9 +213,47 @@ const AdminProfile = () => {
     getCandidates();
   }, [currentPage]);
 
+  useEffect(() => {
+    if (confirmButtonPressed !== null && (approveAction || disapproveAction)) {
+      try {
+        if (approveAction) {
+          if (confirmButtonPressed) {
+            const password = randomPassword(8);
+            approveCandidate(candidateSelected, password).then(() => {
+              setCandidates(candidates.splice(0, candidates.length));
+            }).then(() => {
+              getCandidates();
+              const myToast = new Toast("Operation performed");
+              myToast.notifyMessage();
+            });
+          }
+        }
+        if (disapproveAction) {
+          if (confirmButtonPressed) {
+            disapproveCandidate(candidateSelected).then(() => {
+              setCandidates(candidates.splice(0, candidates.length));
+            }).then(() => {
+              getCandidates();
+              const myToast = new Toast("Operation performed");
+              myToast.notifyMessage();
+            });
+          }
+        }
+        resetDialogParameters();
+        setApproveAction(false);
+        setDisapproveAction(false);
+        setCandidateSelected(null);
+      } catch (error) {
+        const myToast = new Toast(error.toString());
+        myToast.notifyError();
+      }
+    }
+  }, [confirmButtonPressed]);
+
   return (
     <div>
       <Toaster position="top-center" reverseOrder={false} />
+      {showDialog && <ConfirmDialogBox message={dialogMessage}/>}
       {isLoading && <Loader/>}
       <Navbar />
       <div className="bg-gray-50 min-h-screen">
@@ -182,7 +328,6 @@ const AdminProfile = () => {
               Carica
             </button>}
           </div>
-          {showModal && <CandidateModal/>}
         </div>
       </div>
       <Footer />
