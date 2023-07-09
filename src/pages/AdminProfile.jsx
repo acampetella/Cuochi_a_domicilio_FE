@@ -225,6 +225,9 @@ const AdminProfile = () => {
               getCandidates();
               const myToast = new Toast("Operation performed");
               myToast.notifyMessage();
+            }).catch((error) => {
+              const myToast = new Toast(error.toString());
+              myToast.notifyError();
             });
           }
         }
@@ -236,6 +239,9 @@ const AdminProfile = () => {
               getCandidates();
               const myToast = new Toast("Operation performed");
               myToast.notifyMessage();
+            }).catch((error) => {
+              const myToast = new Toast(error.toString());
+              myToast.notifyError();
             });
           }
         }
