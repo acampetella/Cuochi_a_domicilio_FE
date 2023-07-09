@@ -120,7 +120,7 @@ const AdminProfile = () => {
     */
     await createCookUser(candidate, password);
     await deleteCandidate(candidate);
-
+    await sendEmail(candidate, "Richiesta approvata", getWelcomeMessage(candidate.email, password));
   };
 
   const disapproveCandidate = async (candidate) => {
@@ -129,6 +129,7 @@ const AdminProfile = () => {
       2 - inviare mail
     */
     await deleteCandidate(candidate);
+    await sendEmail(candidate, "Richiesta non approvata", getRejectMessage());
   };
 
   const createCookUser = async (candidate, psw) => {
@@ -176,8 +177,29 @@ const AdminProfile = () => {
 
   };
 
-  const sendEmail = () => {
-
+  const sendEmail = async (candidate, sub, text) => {
+    const content = {
+      destination: candidate.email,
+      subject: sub,
+      message: text
+    };
+    try {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/sendMail`, {
+        method: "POST",
+        body: JSON.stringify(content),
+        headers: {
+          Auth: token,
+          "Content-Type": "application/json"
+        }
+      });
+      const response = await data.json();
+      if (response.statusCode !== 200) {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+    
   }
 
   const resetDialogParameters = () => {
