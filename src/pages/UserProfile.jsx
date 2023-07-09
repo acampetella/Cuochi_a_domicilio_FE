@@ -26,14 +26,14 @@ import { avatarImage } from "../reducers/avatarUploadReducer";
 const UserProfile = () => {
   const dispatch = useDispatch();
   const change = useSelector(userChange);
-  let actualUser = useSelector(user);
+  let currentUser = useSelector(user);
   let oldUser = useSelector(initialUser);
   const coverImg = useSelector(coverImage);
   const avatarImg = useSelector(avatarImage);
   const [isLoading, setIsLoading] = useState(false);
 
   const saveFunction = async () => {
-    let newUser = { ...actualUser };
+    let newUser = { ...currentUser };
     const token = getAccessKey();
     let myToast;
     try {
@@ -99,7 +99,7 @@ const UserProfile = () => {
           const newToken = response2.newToken;
           localStorage.clear();
           localStorage.setItem("session", newToken);
-          actualUser = { ...newUser };
+          currentUser = { ...newUser };
           oldUser = { ...newUser };
           dispatch(setUserChange(false));
           setIsLoading(false);
@@ -125,16 +125,16 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    if (!actualUser) {
+    if (!currentUser) {
       const session = getDecodeSession();
       dispatch(setUser(session));
       dispatch(setInitialUser(session));
     }
-    if (actualUser && oldUser) {
-      const check = checkUserChange(actualUser, oldUser);
+    if (currentUser && oldUser) {
+      const check = checkUserChange(currentUser, oldUser);
       dispatch(setUserChange(check));
     }
-  }, [dispatch, actualUser]);
+  }, [dispatch, currentUser]);
 
   return (
     <div>
