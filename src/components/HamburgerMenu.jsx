@@ -35,7 +35,7 @@ const HamburgerMenu = ({ menusList, linksList }) => {
         </button>
       </div>}
       <div className={className}>
-        <ul className="absolute top-10 text-black bg-green-700 w-20 rounded-md px-3 py-2">
+        <ul className="absolute top-10 right-2 text-black bg-green-700 w-20 rounded-md px-3 py-2">
           {menusList.map((element, index) => {
             return (
               <li key={nanoid()} onClick={toggleFunction}>
