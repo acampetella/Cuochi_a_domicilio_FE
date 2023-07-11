@@ -8,7 +8,7 @@ import AdminProfile from "./pages/AdminProfile";
 import ProtectedRoutes from "./middlewares/ProtectedRoute";
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserInfoChange from "./pages/UserInfoChange";
-import CookInfo from "./components/CookInfo";
+import CookInfo from "./pages/CookInfo";
 import CookMenus from "./components/CookMenus";
 
 function App() {
