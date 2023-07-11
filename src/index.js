@@ -10,6 +10,8 @@ import coverUploadReducer from './reducers/coverUploadReducer';
 import avatarUploadReducer from './reducers/avatarUploadReducer';
 import confirmDialogReducer from './reducers/confirmDialogReducer';
 import cookReducer from './reducers/cookReducer';
+import cookDescriptionModalReducer from './reducers/cookDescriptionModalReducer';
+import cookTownModalReducer from './reducers/cookTownModalReducer';
 
 const reducer = combineReducers({
   userState: userReducer,
@@ -17,7 +19,9 @@ const reducer = combineReducers({
   coverUploadState: coverUploadReducer,
   avatarUploadState: avatarUploadReducer,
   confirmDialogState: confirmDialogReducer,
-  cookState: cookReducer
+  cookState: cookReducer,
+  cookDescriptionModalState: cookDescriptionModalReducer,
+  cookTownModalState: cookTownModalReducer
 });
 
 const store = configureStore({
@@ -26,9 +30,11 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // Ignore these action types
-        ignoredActions: ['coverUploadSlice/setCoverImage', 'avatarUploadSlice/setAvatarImage'],
+        ignoredActions: ['coverUploadSlice/setCoverImage', 'avatarUploadSlice/setAvatarImage', 
+          'cookSlice/setCook', 'cookSlice/setInitialCook'],
         // Ignore these paths in the state
-        ignoredPaths: ['coverUploadState.coverImage', 'avatarUploadState.avatarImage']
+        ignoredPaths: ['coverUploadState.coverImage', 'avatarUploadState.avatarImage', 'cookState.cook', 
+          'cookState.initialCook']
       }
     }),
   reducer
