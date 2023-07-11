@@ -16,6 +16,8 @@ import CookDescriptionModal from "../components/CookDescriptionModal";
 import AddCookTownModal from "../components/AddCookTownModal";
 import { cookTownModalShow, setCookTownModalShow } from "../reducers/cookTownModalReducer";
 import { cookDescriptionModalShow, setCookDescriptionModalShow } from "../reducers/cookDescriptionModalReducer";
+import { cookLinkModalShow, setCookLinkModalShow } from "../reducers/cookLinkModalReducer";
+import AddCookLinkModal from "../components/AddCookLinkModal";
 
 const CookInfo = () => {
 
@@ -26,6 +28,8 @@ const CookInfo = () => {
   const token = getDecodeSession();
   const showDescriptionModal = useSelector(cookDescriptionModalShow);
   const showTownModal = useSelector(cookTownModalShow);
+  const showLinkModal = useSelector(cookLinkModalShow);
+  const change = useSelector(cookChange);
 
   const toggleOnline = () => {
     setOnline(!online);
@@ -59,12 +63,23 @@ const CookInfo = () => {
     dispatch(setCookTownModalShow(true));
   };
 
+  const addLinkHandler = () => {
+    dispatch(setCookLinkModalShow(true));
+  };
+
   const deleteTownHandler = (index) => {
     const arr = [...currentCook.towns];
     arr.splice(index, 1);
     const newCook = { ...currentCook, towns: arr };
     dispatch(setCook(newCook));
-  }
+  };
+
+  const deleteLinkHandler = (index) => {
+    const arr = [...currentCook.personalLinks];
+    arr.splice(index, 1);
+    const newCook = { ...currentCook, personalLinks: arr };
+    dispatch(setCook(newCook));
+  };
 
   useEffect(() => {
     getCook().then((newCook) => {
@@ -83,6 +98,7 @@ const CookInfo = () => {
       <Navbar />
       {showDescriptionModal && <CookDescriptionModal/>}
       {showTownModal && <AddCookTownModal/>}
+      {showLinkModal && <AddCookLinkModal/>}
       <div className="flex flex-col justify-center items-center h-[100vh] bg-slate-100">
         <div className="relative flex flex-col items-center rounded-[20px] sm:w-1/2 w-3/5 max-w-[95%] sm:h-1/2 h-3/5 mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
           <div className="mt-2 mb-8 w-full">
@@ -123,13 +139,24 @@ const CookInfo = () => {
               <p className="text-sm text-gray-600">Link personali</p>
               <div className="text-base font-medium text-navy-700 dark:text-white">
                 <ul>
-                  {currentCook && currentCook.personalLinks && currentCook.personalLinks.map((link) => {
-                    return <li key={nanoid()}><a href={link}></a></li>
-                  })}
+                  {currentCook && currentCook.personalLinks && currentCook.personalLinks.map((link, index) => {
+                    return( 
+                      <li key={nanoid()}>
+                        <a href={link.linkSource} target="_blank">
+                          {link.linkName}
+                        </a>
+                        <button 
+                          className="ml-2"
+                          onClick={() => deleteLinkHandler(index)}
+                        >
+                          <RiDeleteBin5Line className="text-xl"/>
+                        </button>
+                      </li>
+                  )})}
                 </ul>
               </div>
               <div className="mt-4">
-                <button><CgAddR className="md:text-3xl text-xl"/></button>
+                <button onClick={addLinkHandler}><CgAddR className="md:text-3xl text-xl"/></button>
               </div>
             </div>
             <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
@@ -151,6 +178,14 @@ const CookInfo = () => {
                 {!online && <span>Offline</span>}
               </label>
             </div>
+          </div>
+          <div className="xl:my-3 md:my-2 my-1 xl:ml-10 md:ml-8 ml-6 xl:text-2xl md:text-xl text-base font-medium flex justify-center items-center">
+            <button
+              disabled={!change}
+              className="xl:w-[220px] lg:w-[200px] md:w-[180px] w-[160px] px-4 py-2 my-2 lg:font-bold font-normal text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+            >
+              Salva
+            </button>
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ import confirmDialogReducer from './reducers/confirmDialogReducer';
 import cookReducer from './reducers/cookReducer';
 import cookDescriptionModalReducer from './reducers/cookDescriptionModalReducer';
 import cookTownModalReducer from './reducers/cookTownModalReducer';
+import cookLinkModalReducer from './reducers/cookLinkModalReducer';
 
 const reducer = combineReducers({
   userState: userReducer,
@@ -21,7 +22,8 @@ const reducer = combineReducers({
   confirmDialogState: confirmDialogReducer,
   cookState: cookReducer,
   cookDescriptionModalState: cookDescriptionModalReducer,
-  cookTownModalState: cookTownModalReducer
+  cookTownModalState: cookTownModalReducer,
+  cookLinkModalState: cookLinkModalReducer
 });
 
 const store = configureStore({
