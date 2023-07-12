@@ -9,7 +9,8 @@ import ProtectedRoutes from "./middlewares/ProtectedRoute";
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserInfoChange from "./pages/UserInfoChange";
 import CookInfo from "./pages/CookInfo";
-import CookMenus from "./components/CookMenus";
+import CookMenus from "./pages/CookMenus";
+import AddMenu from "./pages/AddMenu";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/userInfoChange" element={<UserInfoChange />} />
           <Route path="/cookInfo" element={<CookInfo />} />
           <Route path="/cookMenus" element={<CookMenus />} />
+          <Route path="/addMenu" element={<AddMenu />} />
         </Route>
       </Routes>
     </Router>
