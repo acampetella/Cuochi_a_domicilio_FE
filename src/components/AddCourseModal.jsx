@@ -12,7 +12,7 @@ const AddCourseModal = () => {
   const courses = useSelector(cookMenuCourses);
   const [formData, setFormData] = useState({
     courseName: '',
-    courseType: '',
+    courseType: 'Antipasto',
     courseDescription: '',
     courseImage: {}
   });
@@ -81,12 +81,12 @@ const AddCourseModal = () => {
                 name="courseType" 
                 onChange={onChangeHandler} value={formData.courseType}
               >
-                <option value="antipasto">Antipasto</option>
-                <option value="primo">Primo</option>
-                <option value="secondo">Secondo</option>
-                <option value="contorno">Contorno</option>
-                <option value="dolce">Dolce</option>
-                <option value="frutta">Frutta</option>
+                <option value="Antipasto">Antipasto</option>
+                <option value="Primo">Primo</option>
+                <option value="Secondo">Secondo</option>
+                <option value="Contorno">Contorno</option>
+                <option value="Dolce">Dolce</option>
+                <option value="Frutta">Frutta</option>
               </select>
             </div>
             <div className="mb-5">

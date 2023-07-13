@@ -40,7 +40,9 @@ const store = configureStore({
           'cookSlice/setCook', 'cookSlice/setInitialCook', 'cookMenuSlice/setCookMenuCourses'],
         // Ignore these paths in the state
         ignoredPaths: ['coverUploadState.coverImage', 'avatarUploadState.avatarImage', 'cookState.cook', 
-          'cookState.initialCook', 'cookMenuState.courses.0.courseImage']
+          'cookState.initialCook', 'cookMenuState.courses.0.courseImage', 'cookMenuState.courses.1.courseImage',
+          'cookMenuState.courses.2.courseImage', 'cookMenuState.courses.3.courseImage',
+          'cookMenuState.courses.4.courseImage', 'cookMenuState.courses.5.courseImage']
       }
     }),
   reducer
