@@ -13,6 +13,8 @@ import cookReducer from './reducers/cookReducer';
 import cookDescriptionModalReducer from './reducers/cookDescriptionModalReducer';
 import cookTownModalReducer from './reducers/cookTownModalReducer';
 import cookLinkModalReducer from './reducers/cookLinkModalReducer';
+import addCourseModalReducer from './reducers/addCourseModalReducer';
+import cookMenuReducer from './reducers/cookMenuReducer';
 
 const reducer = combineReducers({
   userState: userReducer,
@@ -23,7 +25,9 @@ const reducer = combineReducers({
   cookState: cookReducer,
   cookDescriptionModalState: cookDescriptionModalReducer,
   cookTownModalState: cookTownModalReducer,
-  cookLinkModalState: cookLinkModalReducer
+  cookLinkModalState: cookLinkModalReducer,
+  addCourseModalState: addCourseModalReducer,
+  cookMenuState: cookMenuReducer
 });
 
 const store = configureStore({
@@ -33,10 +37,12 @@ const store = configureStore({
       serializableCheck: {
         // Ignore these action types
         ignoredActions: ['coverUploadSlice/setCoverImage', 'avatarUploadSlice/setAvatarImage', 
-          'cookSlice/setCook', 'cookSlice/setInitialCook'],
+          'cookSlice/setCook', 'cookSlice/setInitialCook', 'cookMenuSlice/setCookMenuCourses'],
         // Ignore these paths in the state
         ignoredPaths: ['coverUploadState.coverImage', 'avatarUploadState.avatarImage', 'cookState.cook', 
-          'cookState.initialCook']
+          'cookState.initialCook', 'cookMenuState.courses.0.courseImage', 'cookMenuState.courses.1.courseImage',
+          'cookMenuState.courses.2.courseImage', 'cookMenuState.courses.3.courseImage',
+          'cookMenuState.courses.4.courseImage', 'cookMenuState.courses.5.courseImage']
       }
     }),
   reducer
