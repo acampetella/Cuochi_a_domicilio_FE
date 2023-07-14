@@ -2,7 +2,7 @@ import React from "react";
 import { cookMenuCourses, setCookMenuCourses } from "../reducers/cookMenuReducer";
 import { useDispatch, useSelector } from "react-redux";
 
-const MenuCourseCard = ({ title, type, description, image }) => {
+const MenuCourseCard = ({ title, type, description, image, activeDelete = true }) => {
 
     const dispatch = useDispatch();
     const courses = useSelector(cookMenuCourses);
@@ -45,12 +45,12 @@ const MenuCourseCard = ({ title, type, description, image }) => {
               {description}
             </p>
 
-            <button
+            {activeDelete && <button
                 onClick={onDeleteHandler}
               className="block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#FFC933] rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
             >
               Elimina
-            </button>
+            </button>}
           </div>
         </div>
       </div>

@@ -62,12 +62,12 @@ const CookMenus = () => {
   }, [dispatch, currentCook]);
 
   return (
-    <div>
+    <div className="font-[DM_Sans] w-screen min-h-screen">
       <Toaster position="top-center" reverseOrder={false} />
       {isLoading && <Loader />}
       <Navbar />
-      <div className="w-screen min-h-screen bg-slate-100 p-4">
-        <div className="flex flex-col">
+      <div className="w-full min-h-screen bg-slate-100 p-4">
+        <div className="flex flex-col mb-5">
           <label className="text-2xl">Aggiungi Menu</label>
           <Link to={"/addMenu"}>
             <button className="mt-3 ml-3">
@@ -75,29 +75,30 @@ const CookMenus = () => {
             </button>
           </Link>
         </div>
-        <div className="w-full">
+        <div className="w-full mb-2">
           {currentCook && currentCook.menus && currentCook.menus.map((menu) => {
             return (
-              <div key={nanoid()}>
+              <div key={nanoid()} className="w-full mb-3 bg-white p-4 border border-sky-500 rounded-xl">
                 <div>
                   <p>
-                    <span>Nome:</span>
-                    <span>{menu.name}</span>
+                    <span className="font-bold text-2xl">Nome: </span>
+                    <span className="text-2xl">{menu.name}</span>
                   </p>
                   <p>
-                    <span>Prezzo:</span>
-                    <span>{`${menu.price}$`}</span>
+                    <span className="font-bold text-2xl">Prezzo: </span>
+                    <span className="text-2xl">{`${menu.price}$`}</span>
                   </p>
                 </div>
                 <div className="flex flex-wrap my-4 mx-4">
-                  {currentCook.menus.courses && currentCook.menus.courses.map((course) => {
+                  {menu.courses && menu.courses.map((course) => {
                     return (
                       <MenuCourseCard
                         key={nanoid()}
                         title={course.courseName}
                         description={course.courseDescription}
-                        image={course.image}
+                        image={course.courseImage}
                         type={course.courseType}
+                        activeDelete={false}
                       />
                     )
                   })}
