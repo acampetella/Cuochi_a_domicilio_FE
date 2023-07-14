@@ -65,6 +65,7 @@ const CookInfo = () => {
       const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/cooks/byUserId/${userId}`);
       const response = await data.json();
       if (response.statusCode === 200) {
+        setIsLoading(false);
         const newCook = response.cookExists;
         return newCook;
       } else {

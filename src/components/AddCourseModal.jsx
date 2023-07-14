@@ -14,7 +14,7 @@ const AddCourseModal = () => {
     courseName: '',
     courseType: 'Antipasto',
     courseDescription: '',
-    courseImage: {}
+    courseImage: null
   });
 
   const saveButtonHandler = (event) => {
@@ -25,7 +25,7 @@ const AddCourseModal = () => {
       dispatch(setCookMenuCourses(arr));
       dispatch(setCourseModalShow(false));
     } else {
-      const myToast = new Toast('I campi Nome e Tipo sono obbligatori');
+      const myToast = new Toast('I campi sono tutti obbligatori');
       myToast.notifyError();
     }
   };
@@ -45,7 +45,8 @@ const AddCourseModal = () => {
   };
 
   const checkFields = () => {
-    if (formData.courseName !== '' && formData.courseType !== '') {
+    if (formData.courseName !== '' && formData.courseType !== '' && formData.courseDescription !== '' && 
+      formData.courseImage !== null) {
       return true;
     }
     return false;
@@ -93,7 +94,7 @@ const AddCourseModal = () => {
               <label
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Descrizione
+                *Descrizione
               </label>
               <textarea
                 rows="10"
@@ -107,7 +108,7 @@ const AddCourseModal = () => {
               <label
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Immagine
+                *Immagine
               </label>
               <input
                 type="file"

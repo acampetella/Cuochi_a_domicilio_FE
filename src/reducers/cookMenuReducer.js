@@ -21,5 +21,5 @@ const cookMenuSlice = createSlice({
 });
 
 export const cookMenuCourses = (state) => state.cookMenuState.courses;
-export const {setCookMenuName, setCookMenuPrice, setCookMenuCourses} = cookMenuSlice.actions;
+export const {setCookMenuCourses} = cookMenuSlice.actions;
 export default cookMenuSlice.reducer;

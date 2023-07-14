@@ -1,18 +1,36 @@
 import React from "react";
-import { useState } from "react";
+import { cookMenuCourses, setCookMenuCourses } from "../reducers/cookMenuReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const MenuCourseCard = ({ title, type, description, image }) => {
 
+    const dispatch = useDispatch();
+    const courses = useSelector(cookMenuCourses);
+
+    const getIndex = () => {
+      let result;
+      courses.forEach((course, index) => {
+        if (course.courseName === title && course.courseType === type && 
+          course.courseDescription === description) {
+            result = index;
+        }
+      });
+      return result;
+    };
+
     const onDeleteHandler = () => {
-        
+        const index = getIndex();
+        let arr = [...courses];
+        arr.splice(index, 1);
+        dispatch(setCookMenuCourses(arr));
     };
 
   return (
-    <div className="flex items-center justify-center h-full mx-1 my-1">
-      <div className="w-full max-w-md  mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
-        <div className="max-w-md mx-auto">
+    <div className="flex items-center justify-center w-[350px] h-full mx-1 my-1">
+      <div className="w-full max-w-md mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div className="w-full mx-auto">
           <div
-            className="w-[300px]"
+            className="w-full"
           >
             <img src={image} alt="Course Image" className="w-full object-cover bg-center" />
           </div>
