@@ -14,13 +14,14 @@ import "../styles/navbarStyle.css";
 const Navbar = () => {
 
   const [enableManu, setEnableMenu] = useState(false);
+  const [enableUserMenu, setEnableUserMenu] = useState(false);
   const [enableCookMenu, setEnableCookMenu] = useState(false);
   const [userId, setUserId] = useState(null);
   const [profileURL, setProfileURL] = useState(null);
+  const [hamburgerMenusList, setHamburgerMenusList] = useState([]);
+  const [hamburgerLinksList, setHamburgerLinksList] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const hamburgerMenusList = ['Profilo','Info', 'Menu'];
-  const hamburgerLinksList = [profileURL, '/cookInfo', '/cookMenus'];
 
   const logout = () => {
     localStorage.clear();
@@ -44,11 +45,18 @@ const Navbar = () => {
       setUserId(`${session.firstName.toUpperCase().charAt(0)}${session.lastName.toUpperCase().charAt(0)}`);
       if (session.role === 'user') {
         setProfileURL("/userProfile");
+        setEnableUserMenu(true);
+        setHamburgerMenusList(['Profilo', 'Richieste']);
+        setHamburgerLinksList(['/userProfile', '/userRequestsManager']);
       } else if (session.role === 'cook') {
         setProfileURL("/cookProfile");
         setEnableCookMenu(true);
+        setHamburgerMenusList(['Profilo','Info', 'Menu', 'Richieste']);
+        setHamburgerLinksList(['/cookProfile', '/cookInfo', '/cookMenus', '/cookRequestsManager']);
       } else {
         setProfileURL("/adminProfile");
+        setHamburgerMenusList(['Profilo']);
+        setHamburgerLinksList(['/adminProfile']);
       }
     }
   }, []);
@@ -68,12 +76,19 @@ const Navbar = () => {
           </div>
         </div>
       </Link>
+      {enableUserMenu && 
+       <div className="hidden me-20 text-slate-300 text-xl font-semibold sm:flex items-center">
+       <Link to={"/userRequestsManager"} className="ms-1 me-6">
+         Richieste
+       </Link>
+     </div>}
       {enableCookMenu && 
       <div className="hidden me-20 text-slate-300 text-xl font-semibold sm:flex items-center">
         <Link to={"/cookInfo"} className="ms-1 me-6">
           Info
         </Link>
-        <Link to={"/cookMenus"}>Menu</Link>
+        <Link to={"/cookMenus"} className="me-6">Menu</Link>
+        <Link to={"/cookRequestsManager"}>Richieste</Link>
       </div>}
       {enableManu && 
       <div className="me-20 text-slate-300 text-xl font-semibold flex items-center">
