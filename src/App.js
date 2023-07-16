@@ -11,6 +11,7 @@ import UserInfoChange from "./pages/UserInfoChange";
 import CookInfo from "./pages/CookInfo";
 import CookMenus from "./pages/CookMenus";
 import AddMenu from "./pages/AddMenu";
+import RequestsManager from "./pages/RequestsManager";
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
           <Route path="/cookInfo" element={<CookInfo />} />
           <Route path="/cookMenus" element={<CookMenus />} />
           <Route path="/addMenu" element={<AddMenu />} />
+          <Route path="/userRequestsManager" element={<RequestsManager />} />
+          <Route path="/cookRequestsManager" element={<RequestsManager />} />
         </Route>
       </Routes>
     </Router>
