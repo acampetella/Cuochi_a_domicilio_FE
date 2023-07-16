@@ -21,6 +21,7 @@ import { nanoid } from "nanoid";
 import getDecodeSession from "../utilities/token/decodeSession";
 import getAccessKey from "../utilities/token/accessKey";
 import { positiveStateChange, negativeStateChange } from "../utilities/requests/requestsStateManager";
+import DisplayRequest from "../components/DisplayRequest";
 
 const RequestsManager = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const RequestsManager = () => {
   const [isUser, setIsUser] = useState(false);
   const [isCook, setIsCook] = useState(false);
   const [details, setDetails] = useState([]);
+  const [showDeatils, setShowDetails] = useState(false);
   const confirmButtonPressed = useSelector(confirmDialogButtonPressed);
   const user = getDecodeSession();
   const token = getAccessKey();
@@ -50,6 +52,10 @@ const RequestsManager = () => {
           arr[i] = false;
         }
       }
+      setShowDetails(true);
+      console.log(requestSelected);
+    } else {
+      setShowDetails(false);
     }
     setDetails(arr);
   };
@@ -266,7 +272,7 @@ const RequestsManager = () => {
   }, [currentPage]);
 
   return (
-    <div>
+    <div className="w-screen">
       <Toaster position="top-center" reverseOrder={false} />
       {showDialog && <ConfirmDialogBox message={dialogMessage} />}
       {isLoading && <Loader />}
@@ -363,6 +369,7 @@ const RequestsManager = () => {
                 </div>
               </div>
             </div>
+            {showDeatils && <DisplayRequest request={requestSelected}/>}
             {enableButton && (
               <button
                 className="w-[120px] px-4 py-2 my-3 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
