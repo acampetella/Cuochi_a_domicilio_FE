@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Animation from "../components/Animation";
+import Main from "../components/Main";
 
 const Home = () => {
   return (
     <>
       <Navbar/>
-      <Animation/>
+      <Main/>
       <Footer />
     </>
   );
