@@ -1,6 +1,6 @@
 import React from "react";
 import { foodImages } from "../images/foodImages";
-import "../styles/InfiniteSlider.css";
+import "../styles/infiniteSlider.css";
 
 const InfiniteSlider = () => {
   return (

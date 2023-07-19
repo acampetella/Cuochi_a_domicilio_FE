@@ -13,6 +13,7 @@ import CookMenus from "./pages/CookMenus";
 import AddMenu from "./pages/AddMenu";
 import RequestsManager from "./pages/RequestsManager";
 import RequestForm from "./pages/RequestForm";
+import CookPublicProfile from "./pages/CookPublicProfile";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/cookCandidateRegistration" element={<CookCandidateRegistration />} />
         <Route path="/requestForm" element={<RequestForm />} />
+        <Route path="/cookPublicProfile" element={<CookPublicProfile />} />
         <Route element={<ProtectedRoutes/>}>
           <Route path="/cookProfile" element={<CookProfile />} />
           <Route path="/userProfile" element={<UserProfile />} />

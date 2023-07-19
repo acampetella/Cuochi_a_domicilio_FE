@@ -68,7 +68,7 @@ img:hover {
 }
 
 .slider::after {
-    right: 0,
+    right: 0;
     top: 0;
-    transform: rotate(180deg);
+    transform: rotatez(180deg);
 }
