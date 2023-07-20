@@ -8,6 +8,8 @@ import getDecodeSession from "../utilities/token/decodeSession";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser, setInitialUser, setUserChange } from "../reducers/userReducer";
+import {setCook, setInitialCook, setCookChange} from "../reducers/cookReducer";
+import { setCookMenuCourses } from "../reducers/cookMenuReducer";
 import HamburgerMenu from "./HamburgerMenu";
 import "../styles/navbarStyle.css";
 
@@ -26,6 +28,7 @@ const Navbar = () => {
   const logout = () => {
     localStorage.clear();
     resetUserParameters();
+    resetCookParameters();
     setEnableMenu(true);
     navigate("/", { replace: true });
   };
@@ -34,6 +37,13 @@ const Navbar = () => {
     dispatch(setUser(null));
     dispatch(setInitialUser(null));
     dispatch(setUserChange(false));
+  };
+
+  const resetCookParameters = () => {
+    dispatch(setCook(null));
+    dispatch(setInitialCook(null));
+    dispatch(setCookChange(false));
+    dispatch(setCookMenuCourses([]));
   };
 
   useEffect(() => {
@@ -62,7 +72,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-green-800 h-[120px] flex justify-between items-center font-[DM_Sans] sticky top-0 z-10">
+    <nav className="bg-green-800 h-[120px] flex justify-between items-center font-[DM_Sans] sticky top-0 z-20">
       <Link to={'/'}>
         <div className="flex items-center h-full">
           <Logo/>

@@ -28,20 +28,5 @@ export const foodImages = [
     },
     {
         "path": "http://localhost:5050/uploads/foodImages/food10.jpg"
-    },
-    {
-        "path": "http://localhost:5050/uploads/foodImages/food11.jpg"
-    },
-    {
-        "path": "http://localhost:5050/uploads/foodImages/food12.jpg"
-    },
-    {
-        "path": "http://localhost:5050/uploads/foodImages/food13.jpg"
-    },
-    {
-        "path": "http://localhost:5050/uploads/foodImages/food14.jpg"
-    },
-    {
-        "path": "http://localhost:5050/uploads/foodImages/food15.jpg"
     }
 ]

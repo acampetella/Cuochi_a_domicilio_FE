@@ -219,6 +219,7 @@ const AdminProfile = () => {
         if (approveAction) {
           if (confirmButtonPressed) {
             const password = randomPassword(8);
+            console.log(password);
             approveCandidate(candidateSelected, password).then(() => {
               setCandidates(candidates.splice(0, candidates.length));
             }).then(() => {
