@@ -1,0 +1,19 @@
+.banner-style {
+    position:absolute;
+    z-index: 10;
+    top: 40%;
+    left: 33%;
+}
+
+.banner-style h1, h4 {
+    text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+               1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+}
+
+.banner-style h1 {
+    font-size: 5vw;
+}
+
+.banner-style h4 {
+    font-size: 2.5vw;
+}

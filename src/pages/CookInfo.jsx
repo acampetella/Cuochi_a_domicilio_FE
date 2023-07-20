@@ -144,9 +144,11 @@ const CookInfo = () => {
       getCook().then((newCook) => {
       dispatch(setCook(newCook));
       dispatch(setInitialCook(newCook));
+      setOnline(newCook.available);
       });
     }
     if (currentCook && oldCook) {
+      setOnline(currentCook.available);
       const check = checkCookChange(currentCook, oldCook);
       dispatch(setCookChange(check));
     }
@@ -155,7 +157,7 @@ const CookInfo = () => {
   useEffect(() => {
     const newCook = {...currentCook, available: online};
     dispatch(setCook(newCook));
-  }, [online]);
+  }, [dispatch, online]);
 
   useEffect(() => {
     if (descrCollapse) {
@@ -329,6 +331,7 @@ const CookInfo = () => {
                   name="toggle"
                   id="toggle"
                   onChange={toggleOnline}
+                  checked={online}
                   className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
                 />
                 <label

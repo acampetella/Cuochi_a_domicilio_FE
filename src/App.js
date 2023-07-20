@@ -12,6 +12,18 @@ import CookInfo from "./pages/CookInfo";
 import CookMenus from "./pages/CookMenus";
 import AddMenu from "./pages/AddMenu";
 import RequestsManager from "./pages/RequestsManager";
+import RequestForm from "./pages/RequestForm";
+import CookPublicProfile from "./pages/CookPublicProfile";
+
+
+const cercaDoppione = (element, arr) => {
+  for(let i = 0; i < arr.length; i++) {
+    if (element === arr[i]) {
+      return true;
+    }
+  }
+  return false;
+}
 
 function App() {
   return (
@@ -22,6 +34,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cookCandidateRegistration" element={<CookCandidateRegistration />} />
+        <Route path="/cookPublicProfile/:cookId" element={<CookPublicProfile />} />
         <Route element={<ProtectedRoutes/>}>
           <Route path="/cookProfile" element={<CookProfile />} />
           <Route path="/userProfile" element={<UserProfile />} />
@@ -32,6 +45,7 @@ function App() {
           <Route path="/addMenu" element={<AddMenu />} />
           <Route path="/userRequestsManager" element={<RequestsManager />} />
           <Route path="/cookRequestsManager" element={<RequestsManager />} />
+          <Route path="/requestForm/:cookId" element={<RequestForm />} />
         </Route>
       </Routes>
     </Router>
@@ -39,3 +53,4 @@ function App() {
 }
 
 export default App;
+
